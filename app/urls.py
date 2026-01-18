@@ -3,6 +3,7 @@ from app.views import home, test
 
 
 urlpatterns = [
-    path("root", home),
-    path("test", test),
+    path("", home),
+    # path("test", test),
+    
 ]
