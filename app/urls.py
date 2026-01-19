@@ -4,6 +4,4 @@ from app.views import home
 
 urlpatterns = [
     path("", home),
-    # path("test", test),
-    
 ]
