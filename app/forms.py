@@ -1,8 +1,16 @@
 from django import forms 
-from app.models import Article
 
 
 class CreateArticleForm(forms.Form):
-    class Meta:
-        model = Article
-        fields = ("title", "content", "wordCount", "twitterPost", "status")
+    
+    ARTICLE_STATUS = (
+        ('draft', 'Draft'),
+        ('inProgress', "In Progress"), 
+        ('published', "Published")
+    )
+    
+    title = forms.CharField(max_length=100)
+    status = forms.ChoiceField(choices=ARTICLE_STATUS)
+    content = forms.CharField(widget = forms.Textarea)
+    wordCount = forms.IntegerField()
+    twitterPost = forms.CharField(widget=forms.Textarea, required=False)
