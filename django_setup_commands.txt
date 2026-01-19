@@ -1,0 +1,37 @@
+❤️ conda create -n django_course_env python=3.13
+
+❤️ conda activate django_course_env
+--> Change python version to ">=^3.13" in pyproject.toml (Not needed if running these before poetry new...)
+
+❤️ poetry new Django_course (Auto detects current active python version from the conda env)
+--> Open folder in VS-code
+
+❤️ poetry config virtualenvs.create false --local 
+--> (Creates poetry.toml to say poetry not to create its own Virtual Env.)
+
+❤️ poetry install --no-root
+--> (Creates poetry.lock Lockfile, Locking only the python version, will give error if Poetry new was run using system python version and the conda env with a different version is currently active)
+
+❤️ poetry add django 
+--> (Updates lockfile to include package django, sqlparse, etc...)
+--> Remove src/django_course to follow Poetry Project structure.
+
+🩵 poetry run django-admin startproject django_course . 
+-->(Don't forget the DOT ! Creates a folder named same as root folder besides pyproject.toml)
+
+🩵 poetry run python ./manage.py runserver
+--> Gives the Rocket Boost on localhost
+
+poetry run python .\manage.py migrate
+--> (Creates databases and migrates them for creating superuser)
+
+poetry run python .\manage.py createsuperuser
+--> Give username and E-Mail.
+--> <password> password used.
+
+🩵 poetry run python .\manage.py startapp app
+--> Creates app folder under root folder. 
+--> A Django app is a package that provides a set of features to your Django Project.
+
+🩵 poetry run python .\manage.py makemigrations
+🩵 poetry run python .\manage.py migrate
