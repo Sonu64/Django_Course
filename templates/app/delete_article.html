@@ -1,15 +1,7 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Article</title>
-  </head>
-  <body>
-    <h1>Are you sure you wanna delete {{ article.title }} ?</h1>
-    <form action="" method="POST">
-      {% csrf_token %}
-      <button type="submit">Yes, Delete</button>
-    </form>
-  </body>
-</html>
+{% extends 'app/base.html' %} {% block content %}
+<h1>Are you sure you wanna delete {{ article.title }} ?</h1>
+<form action="" method="POST">
+  {% csrf_token %}
+  <button type="submit">Yes, Delete</button>
+</form>
+{% endblock content %}

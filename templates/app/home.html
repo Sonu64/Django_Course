@@ -1,16 +1,8 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Articles</title>
-  </head>
-  <body>
-    <h1>Articles</h1>
-    <ul style="list-style-type: none">
-      {% for article in articles %}
-      <li>🌟{{ article.title }} with {{ article.wordCount }} words.</li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+{% extends 'app/base.html' %} {% block content %}
+<h1>Articles</h1>
+<ul style="list-style-type: none">
+  {% for article in articles %}
+  <li>🌟{{ article.title }} with {{ article.wordCount }} words.</li>
+  {% endfor %}
+</ul>
+{% endblock content %}
