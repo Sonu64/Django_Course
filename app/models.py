@@ -15,7 +15,7 @@ class UserProfile(AbstractUser):
 class Article(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True, default="")
-    wordCount = models.IntegerField()
+    wordCount = models.IntegerField(blank=True, default="")
     twitterPost = models.TextField(blank=True, default="")
     status = models.CharField(
         max_length=20, 

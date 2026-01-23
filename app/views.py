@@ -16,7 +16,7 @@ class ArticleListView(ListView):
 class ArticleCreateView(CreateView):
     template_name = 'app/create_article.html'
     model = Article
-    fields = ["title", "content", "status", "wordCount", "twitterPost"]
+    fields = ["title", "content", "status", "twitterPost"]
     success_url = reverse_lazy('home')
     
     
@@ -27,7 +27,7 @@ class ArticleUpdateView(UpdateView):
     # And stores this fetched article in the context_object_name
     template_name = 'app/update_article.html'
     model = Article
-    fields = ["title", "content", "status", "wordCount", "twitterPost"]
+    fields = ["title", "content", "status", "twitterPost"]
     success_url = reverse_lazy('home')
     context_object_name = "article" # this contains the row to be updated
     

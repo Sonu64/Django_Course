@@ -26,7 +26,7 @@
       🌟<strong
         >ID: {{ article.id }}&nbsp;&nbsp;&nbsp;{{ article.title }}</strong
       >
-      with {{ article.wordCount }} words.
+      with {{ article.wordCount }} word{{ article.wordCount | pluralize }}.
     </li>
 
     <a
