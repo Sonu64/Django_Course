@@ -2,6 +2,32 @@
 <h1>
   Update Article with content {{ article.content }}, auto escaped HTML by Django
 </h1>
+<a
+  href=" {% url 'home' %} "
+  style="
+    border: 2px solid black;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: sans-serif;
+    padding: 10px 20px;
+    background-color: rgb(0, 9, 186);
+    color: white;
+  "
+  >Cancel</a
+>
+<a
+  href=" {% url 'deleteArticle' pk=article.id %} "
+  style="
+    border: 2px solid black;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: sans-serif;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+  "
+  >Delete this Article</a
+>
 <!-- <h1>Update Article with content {{ article.content | safe }}</h1> if we wanna avoid auto-escape ! Not Recommended ! -->
 <p>Article was last updated on {{ article.updatedAt | date:"jS F Y, P"}}</p>
 <form action="" method="POST">

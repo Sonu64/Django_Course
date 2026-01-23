@@ -1,7 +1,35 @@
 {% extends 'app/base.html' %} {% block content %}
 <h1>Are you sure you wanna delete {{ article.title }} ?</h1>
+<a
+  href=" {% url 'home' %} "
+  style="
+    border: 2px solid black;
+    text-decoration: none;
+    font-size: 18px;
+    font-family: sans-serif;
+    padding: 10px 20px;
+    background-color: rgb(0, 113, 89);
+    color: white;
+  "
+  >No, Take Me Back !</a
+>
 <form action="" method="POST">
   {% csrf_token %}
-  <button type="submit">Yes, Delete</button>
+  <button
+    type="submit"
+    style="
+      border: 2px solid black;
+      text-decoration: none;
+      font-size: 18px;
+      font-family: sans-serif;
+      padding: 10px 20px;
+      background-color: rgb(238, 40, 0);
+      color: white;
+      margin-top: 20px;
+      cursor: pointer;
+    "
+  >
+    Yes, Delete
+  </button>
 </form>
 {% endblock content %}

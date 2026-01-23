@@ -1,8 +1,65 @@
 {% extends 'app/base.html' %} {% block content %}
 <h1>Articles</h1>
-<ul style="list-style-type: none">
+
+<div style="margin-bottom: 30px">
+  <a
+    href="{% url 'createArticle' %}"
+    style="
+      border: 2px solid black;
+      text-decoration: none;
+      font-size: 18px;
+      font-family: sans-serif;
+      padding: 10px 20px;
+      background-color: rgb(0, 126, 168);
+      color: white;
+    "
+  >
+    Create an Article
+  </a>
+</div>
+
+{% if articles %}
+<ul style="list-style-type: none; padding: 0">
   {% for article in articles %}
-  <li>🌟{{ article.title }} with {{ article.wordCount }} words.</li>
+  <div style="margin-bottom: 40px">
+    <li style="font-size: 20px; font-family: sans-serif; margin-bottom: 10px">
+      🌟<strong
+        >ID: {{ article.id }}&nbsp;&nbsp;&nbsp;{{ article.title }}</strong
+      >
+      with {{ article.wordCount }} words.
+    </li>
+
+    <a
+      href="{% url 'updateArticle' pk=article.id %}"
+      style="
+        border: 2px solid black;
+        text-decoration: none;
+        font-family: sans-serif;
+        padding: 5px 15px;
+        background-color: rgb(0, 9, 186);
+        color: white;
+        margin-right: 10px;
+      "
+    >
+      Update
+    </a>
+
+    <a
+      href="{% url 'deleteArticle' pk=article.id %}"
+      style="
+        border: 2px solid black;
+        text-decoration: none;
+        font-family: sans-serif;
+        padding: 5px 15px;
+        background-color: rgb(208, 35, 0);
+        color: white;
+      "
+    >
+      Delete
+    </a>
+  </div>
   {% endfor %}
 </ul>
-{% endblock content %}
+{% else %}
+<p>You have no Articles to Show !</p>
+{% endif %} {% endblock content %}
