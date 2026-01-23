@@ -3,6 +3,7 @@
   Update Article with content {{ article.content }}, auto escaped HTML by Django
 </h1>
 <!-- <h1>Update Article with content {{ article.content | safe }}</h1> if we wanna avoid auto-escape ! Not Recommended ! -->
+<p>Article was last updated on {{ article.updatedAt | date:"jS F Y, P"}}</p>
 <form action="" method="POST">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit">Update Article</button>
