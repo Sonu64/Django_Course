@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import re
 
 ARTICLE_STATUS = (
         ('draft', 'Draft'),
@@ -23,3 +24,8 @@ class Article(models.Model):
     )
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+    
+    def save(self, *args, **kwargs):
+        text = re.sub(r"<[^>]*", "", self.content).replace("&nbsp;", " ")
+        self.wordCount = len(re.findall(r"\b\w+\b", text))
+        super().save(*args, **kwargs)
