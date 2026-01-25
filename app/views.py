@@ -20,7 +20,6 @@ class ArticleCreateView(CreateView):
     success_url = reverse_lazy('home')
     
     
-    
 class ArticleUpdateView(UpdateView):
     # Primary Key = ID, fetched from Route, automatically by Django Magic !
     # UpdateView fetches the article with that ID, pre-fills the form with its values
