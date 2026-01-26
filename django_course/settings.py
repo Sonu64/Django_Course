@@ -50,6 +50,21 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Code for Enabling debug-toolbar while Running Docker Image - black-box for now📦
+if DEBUG:
+    INSTALLED_APPS += [
+        "debug_toolbar"
+    ]
+    
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware"
+    ]
+    
+    import socket
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    
+    INTERNAL_IPS = [ip[:-1]+"1" for ip in ips] + ['127.0.0.1']
+
 ROOT_URLCONF = 'django_course.urls'
 
 TEMPLATES = [
