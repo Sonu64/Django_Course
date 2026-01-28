@@ -19,6 +19,13 @@ class ArticleCreateView(CreateView):
     fields = ["title", "content", "status", "twitterPost"]
     success_url = reverse_lazy('home')
     
+    def form_valid(self, form):
+        form.instance.creator = self.request.user
+        return super().form_valid(form)
+        # In Python, super() (the function) returns an object that allows you to call any method on the parent (following the MRO, since multiple inheritance is possible in Python !), including __init__, form_valid, or any custom logic.
+        # In Java, super is a keyword, but in Python super() is a method 
+    
+    
     
 class ArticleUpdateView(UpdateView):
     # Primary Key = ID, fetched from Route, automatically by Django Magic !

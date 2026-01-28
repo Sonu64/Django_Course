@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 import re
 
 ARTICLE_STATUS = (
@@ -24,6 +25,11 @@ class Article(models.Model):
     )
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now=True)
+    creator = models.ForeignKey(
+        settings.AUTH_USER_MODEL,related_name='articles', on_delete=models.CASCADE) # Creates a creator_ID field in the Articles table
+    # User.articles will give all articles related to that user, if User is a row from UserProfile table.
+    ##### Modified DB models --> Run a migration !!
+    ### ONE OFF VALUE OF CURRENT SUPERUSER given during makemigrations. This makes all prev articles with no value of creator.id to use that one off value.
     
     def save(self, *args, **kwargs):
         text = re.sub(r"<[^>]*", "", self.content).replace("&nbsp;", " ")
