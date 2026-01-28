@@ -72,7 +72,8 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     'allauth',
     'allauth.account',
-    'allauth.socialaccount',
+    'allauth.socialaccount', # Creates table to store social account info -> socialaccount_socialaccount, socialaccount_socialapp, socialaccount_socialtoken ! Check DB file bro 😃 MIGRATION NEEDED if you add this after adding only allauth.account and allauth !!!!
+    'allauth.socialaccount.providers.github',
 ]
 
 PROJECT_APPS = [
