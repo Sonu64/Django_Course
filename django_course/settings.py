@@ -28,10 +28,39 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Configure allauth as authentication backend, allow sign in via email as well as username.
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
-INSTALLED_APPS = [
-    'app.apps.AppConfig',
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Application definitions
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +69,48 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+THIRD_PARTY_APPS = [
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+]
+
+PROJECT_APPS = [
+    'app.apps.AppConfig',
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS # Combining all apps into one list, keeping things clean.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Middleware configuration
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,6 +120,28 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+THIRD_PARTY_MIDDLEWARE = [
+     'allauth.account.middleware.AuthenticationMiddleware',
+]
+
+MIDDLEWARE += THIRD_PARTY_MIDDLEWARE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Code for Enabling debug-toolbar while Running Docker Image - black-box for now📦
 if DEBUG:
