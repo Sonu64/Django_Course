@@ -122,7 +122,7 @@ MIDDLEWARE = [
 ]
 
 THIRD_PARTY_MIDDLEWARE = [
-     'allauth.account.middleware.AuthenticationMiddleware',
+     'allauth.account.middleware.AccountMiddleware',
 ]
 
 MIDDLEWARE += THIRD_PARTY_MIDDLEWARE
@@ -253,7 +253,7 @@ USE_TZ = True
 
 # AUTHENTICATION PAGES !!
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'login'
+LOGOUT_REDIRECT_URL = 'account_login'
 
 
 # Static files (CSS, JavaScript, Images)

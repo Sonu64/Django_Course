@@ -75,14 +75,20 @@
 
       {% if user.is_authenticated %}
       <li>
-        <form action="{% url 'logout' %}" method="POST" class="logout-form">
+        <form
+          action="{% url 'account_logout' %}"
+          method="POST"
+          class="logout-form"
+        >
           {% csrf_token %}
           <button type="submit" class="nav-btn-base btn-logout">Logout</button>
         </form>
       </li>
       {% else %}
       <li>
-        <a href="{% url 'login' %}" class="nav-btn-base btn-login">Login</a>
+        <a href="{% url 'account_login' %}" class="nav-btn-base btn-login"
+          >Login</a
+        >
       </li>
       {% endif %}
     </nav>

@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(pattern_name='home')),
     path('articles/', include("app.urls")),
-    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/', include('allauth.urls')),  # django-allauth URLs, no need for manual setup like a registrations/login.html...etc. allauth provides those pages out of the box. In the other HTML templates, we just have to use url 'account_login' to point to login page. and url 'account_logout' to point to logout page. Intially we did url 'logout OR login' but that was custom, now we are using allauth's built in logout/login page. Similar changes need to be done in settings.py to configure allauth. ex:- In LOGOUT_REDIRECT_URL etc.
     path('__debug__/', include("debug_toolbar.urls")),
 ]
