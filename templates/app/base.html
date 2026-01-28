@@ -1,17 +1,37 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Django App{% endblock title %}</title>
     <style>
       /* Base Navbar Container */
       .navbar {
-        background-color: #1a1a1a; /* Dark sleek background */
+        background-color: #1a1a1a;
         padding: 12px 24px;
         display: flex;
         align-items: center;
         gap: 15px;
         list-style: none;
-        font-family: sans-serif;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
         margin: 0;
+      }
+
+      /* Spacer to push Logout/Login to the far right if you want */
+      .nav-spacer {
+        flex-grow: 1;
+      }
+
+      /* Username Display Style */
+      .user-identity {
+        color: #ffca28; /* Gold color for the username */
+        font-weight: bold;
+        font-size: 16px;
+        margin-right: 10px;
+        padding: 5px 12px;
+        border: 1px solid #ffca28;
+        border-radius: 20px;
+        background: rgba(255, 202, 40, 0.1);
       }
 
       /* The "Interface": Shared styles for both <a> and <button> */
@@ -19,7 +39,7 @@
         text-decoration: none;
         padding: 10px 20px;
         border-radius: 6px;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: bold;
         border: none;
         cursor: pointer;
@@ -31,41 +51,41 @@
       }
 
       .nav-btn-base:active {
-        transform: scale(0.95); /* Tactile click effect */
+        transform: scale(0.95);
       }
 
-      /* Specific Implementations (Colors) */
+      /* Specific Colors */
       .btn-home {
-        background-color: #4361ee; /* Solid Blue */
+        background-color: #4361ee;
       }
-      .btn-home:hover {
-        filter: brightness(1.2);
-      }
-
       .btn-login {
-        background-color: #2ec4b6; /* Teal/Green */
+        background-color: #2ec4b6;
       }
-      .btn-login:hover {
-        filter: brightness(1.2);
-      }
-
       .btn-logout {
-        background-color: #e71d36; /* Danger Red */
+        background-color: #e71d36;
       }
-      .btn-logout:hover {
+
+      .nav-btn-base:hover {
         filter: brightness(1.2);
       }
 
-      /* Fix for the Logout Form layout */
       .logout-form {
         display: inline;
         margin: 0;
       }
-    </style>
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Base Title</title>
+      /* Footer Branding */
+      .main-footer {
+        background-color: #6200ea;
+        color: white;
+        padding: 20px;
+        margin-top: 30px;
+        font-weight: bold;
+        font-size: 18px;
+        font-family: sans-serif;
+        text-align: center;
+      }
+    </style>
   </head>
   <body>
     <nav class="navbar">
@@ -73,7 +93,12 @@
         <a href="{% url 'home' %}" class="nav-btn-base btn-home">Home</a>
       </li>
 
+      <div class="nav-spacer"></div>
+
       {% if user.is_authenticated %}
+      <li>
+        <span class="user-identity">👤 {{ user.username }}</span>
+      </li>
       <li>
         <form
           action="{% url 'account_logout' %}"
@@ -92,19 +117,11 @@
       </li>
       {% endif %}
     </nav>
-    {% block content %} {% endblock content %}
-    <footer
-      style="
-        background-color: rgb(158, 2, 255);
-        color: white;
-        padding: 14px;
-        margin: 15px;
-        font-weight: bold;
-        font-size: 25px;
-        font-family: sans-serif;
-      "
-    >
-      Common foooter for every page
-    </footer>
+
+    <div class="container" style="padding: 20px">
+      {% block content %} {% endblock content %}
+    </div>
+
+    <footer class="main-footer">System Dashboard &copy; 2024</footer>
   </body>
 </html>

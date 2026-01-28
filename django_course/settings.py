@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 # Configure allauth as authentication backend, allow sign in via email as well as username.
 AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
