@@ -30,8 +30,9 @@ ALLOWED_HOSTS = []
 
 # Configure allauth as authentication backend, allow sign in via email as well as username.
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend', # ⚠️⚠️ Order matters ! Keep allauth 1st, then default-django backend. So for the Admin panel, it will prioritize E-Mail first, but even if Username is given and it matches, Login is Possible. Generally we tend to Like this behaviour for our Admin Panel ! Not for other users. So we removed the username field from Login/Signup and marked it as REQUIRED = False.⚠️⚠️
+    
 ]
 
 
@@ -256,6 +257,17 @@ USE_TZ = True
 # AUTHENTICATION PAGES !!
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'account_login'
+
+
+# ⚠️⚠️⚠️ # allauth Configuration to use E-Mail instead of Username to Login, and make Username optional
+# Now Username field will be hidden in Sign-Up form. It will only contain E-Mail and Password fields. Allauth will take care of the username, and auto-generate it from the E-Mail, if something like sonu@gmail.com and sonu@outlook.com, usernames will be sonu1 and sonu2 maybe.
+# In the Admin Panel Login, though the field will say "Username" - we have to can use E-Mail also, as authentication_method is now "email", not the default "username". For admin panel we can also use Username, check AUTHENTICATION_BACKENDS above !!! ⚠️⚠️⚠️ 
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
 
 
 # Static files (CSS, JavaScript, Images)
