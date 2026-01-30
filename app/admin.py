@@ -3,8 +3,10 @@ from django.contrib.auth.admin import UserAdmin
 from app.models import User, Article
 # Register your models here.
 
+# File to control what the Admin will see about the Models.
+
 class CustomUserAdmin(UserAdmin):
-    # We can customize the UserAdmin here if needed, for now we will use the default settings.
+    # We can customize the UserAdmin here if needed, for now we will use the default settings, initially used User model given to us by  django.models...jst like class User(User):[...code...] but now we are creating our own CustomUserAdmin inherited from django.contrib.auth.admin.UserAdmin....we could have named UserAdmin(UserAdmin), but we prefixef with Custom just to avoid naming confusions with the default useradmin class -> UserAdmin
     pass
 
 
