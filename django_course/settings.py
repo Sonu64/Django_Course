@@ -262,10 +262,9 @@ LOGOUT_REDIRECT_URL = 'account_login'
 # ⚠️⚠️⚠️ # allauth Configuration to use E-Mail instead of Username to Login, and make Username optional
 # Now Username field will be hidden in Sign-Up form. It will only contain E-Mail and Password fields. Allauth will take care of the username, and auto-generate it from the E-Mail, if something like sonu@gmail.com and sonu@outlook.com, usernames will be sonu1 and sonu2 maybe.
 # In the Admin Panel Login, though the field will say "Username" - we have to can use E-Mail also, as authentication_method is now "email", not the default "username". For admin panel we can also use Username, check AUTHENTICATION_BACKENDS above !!! ⚠️⚠️⚠️ 
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
 
