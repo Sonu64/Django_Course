@@ -5,6 +5,11 @@ ENV PYTHONUNBUFFERED=1 \
     # Tell poetry not to make its own venvs
     POETRY_VIRTUALENVS_CREATE=false
 
+
+RUN apt update
+RUN apt install gettext -y
+
+
 WORKDIR /code
 
 # Install poetry

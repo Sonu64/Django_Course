@@ -1,0 +1,47 @@
+# Bengali translations for the Medical App.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-30 16:36+0530\n"
+"PO-Revision-Date: 2026-01-30 16:40+0530\n"
+"Last-Translator: Sonu\n"
+"Language-Team: Bengali\n"
+"Language: bn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\app\models.py:19
+msgid "Title"
+msgstr "শিরোনাম"
+
+#: .\app\models.py:20
+msgid "Content"
+msgstr "বিষয়বস্তু"
+
+#: .\app\models.py:21
+msgid "Word Count"
+msgstr "শব্দ সংখ্যা"
+
+#: .\app\models.py:22
+msgid "Twitter Post"
+msgstr "টুইটার পোস্ট"
+
+#: .\app\models.py:24
+msgid "Status"
+msgstr "অবস্থা"
+
+#: .\app\models.py:32
+msgid "Creator"
+msgstr "স্রষ্টা"
+
+#: .\django_course\settings.py:262
+msgid "English"
+msgstr "ইংরেজি"
+
+#: .\django_course\settings.py:263
+msgid "Bengali"
+msgstr "বাংলা"

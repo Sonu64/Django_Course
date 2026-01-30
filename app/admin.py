@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from app.models import User, Article
+from django.utils.translation import gettext_lazy as _
 # Register your models here.
 
 # File to control what the Admin will see about the Models.
