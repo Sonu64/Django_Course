@@ -203,9 +203,9 @@ DATABASES = {
 
 
 # Customizing User Models --> Overriding Djangos default User Model and also ensuring 
-# that in every file requring our user we have to write something like - from app.models import UserProfile.
+# that in every file requring our user we have to write something like - from app.models import User.
 # this setting must be defined before the first migration and never changed after initial migration, as changing it later can break the database schema.
-AUTH_USER_MODEL = "app.UserProfile"
+AUTH_USER_MODEL = "app.User"
 
 
 

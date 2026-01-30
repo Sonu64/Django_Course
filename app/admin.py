@@ -1,5 +1,6 @@
 from django.contrib import admin
-from app.models import UserProfile, Article
+from django.contrib.auth.admin import UserAdmin
+from app.models import User, Article
 # Register your models here.
 
 class ArticleAdmin(admin.ModelAdmin):
@@ -11,7 +12,10 @@ class ArticleAdmin(admin.ModelAdmin):
     readonly_fields = ("wordCount", "createdAt", "updatedAt",)
     
 
-admin.site.register(UserProfile)
+admin.site.register(User, UserAdmin) # Here User is the default User model we created in models.py - inheriting from Djangos AbstractUser class.
 admin.site.register(Article, ArticleAdmin)
+
+### ------- SYNTAX REMINDER FOR ADMIN CUSTOMIZATION -------- ###
+# admin.site.register(ModelName, ModelAdminClassName)
 
 

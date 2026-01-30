@@ -10,7 +10,7 @@ ARTICLE_STATUS = (
     )
 
 
-class UserProfile(AbstractUser):
+class User(AbstractUser):
     pass
 
 class Article(models.Model):
@@ -27,7 +27,7 @@ class Article(models.Model):
     updatedAt = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(
         settings.AUTH_USER_MODEL,related_name='articles', on_delete=models.CASCADE) # Creates a creator_ID field in the Articles table
-    # User.articles will give all articles related to that user, if User is a row from UserProfile table.
+    # User.articles will give all articles related to that user, if User is a row from User table.
     ##### Modified DB models --> Run a migration !!
     ### ONE OFF VALUE OF CURRENT SUPERUSER given during makemigrations. This makes all prev articles with no value of creator.id to use that one off value.
     
