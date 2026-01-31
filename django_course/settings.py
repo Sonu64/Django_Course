@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Configure allauth as authentication backend, allow sign in via email as well as username.
 AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
-    'django.contrib.auth.backends.ModelBackend', # ⚠️⚠️ Order matters ! Keep allauth 1st, then default-django backend. So for the Admin panel, it will prioritize E-Mail first, but even if Username is given and it matches, Login is Possible. Generally we tend to Like this behaviour for our Admin Panel ! Not for other users. So we removed the username field from Login/Signup and marked it as REQUIRED = False.⚠️⚠️
+    'django.contrib.auth.backends.ModelBackend', # ⚠️⚠️ Order matters ! Keep allauth 1st, then default-django backend. So for the Admin panel, it will prioritize E-Mail first, but even if Username is given and it matches, Login is Possible. Generally we tend to Like this behaviour for our Admin Panel ! Not for other users. So we removed the username field from Login/Signup and marked it as REQUIRED = False.----- Changed after setting USERNAME = "email" after CustomUserManager in managers.py. Now the username field is not shown in Either Login forms - for admin or for normal users.⚠️⚠️
     
 ]
 
