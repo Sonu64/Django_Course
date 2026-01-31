@@ -286,4 +286,14 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
+
+
+# Project Specific Static files.
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# App Specific Static files.
 STATIC_URL = 'static/'
+
+

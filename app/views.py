@@ -45,7 +45,6 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         # 1. Fetch the specific row from the DB
         article = self.get_object() 
-        
         # 2. Comparison Logic
         if self.request.user == article.creator:
             return True
@@ -74,7 +73,6 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         # 1. Fetch the specific row from the DB
         article = self.get_object() 
-        
         # 2. Comparison Logic
         if self.request.user == article.creator:
             return True
