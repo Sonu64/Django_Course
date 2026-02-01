@@ -37,4 +37,31 @@
   {% csrf_token %} {{ form.as_p }}
   <button type="submit">Update Article</button>
 </form>
-{% endblock content %}
+{% endblock content %}{% block javascript %}
+<script>
+  const easyMDE = new EasyMDE({
+    element: document.getElementById("id_content"),
+    spellChecker: false,
+    status: false,
+    toolbar: [
+      "bold",
+      "italic",
+      "heading",
+      "|",
+      "quote",
+      "unordered-list",
+      "ordered-list",
+      "|",
+      "link",
+      "image",
+      "|",
+      "preview",
+      "side-by-side",
+      "fullscreen",
+      "|",
+      "guide",
+    ],
+    forcesync: true,
+  });
+</script>
+{% endblock javascript %}

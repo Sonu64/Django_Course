@@ -1,9 +1,15 @@
-{% load static %} {% load humanize %}
+{% load static %}
+<!-- {% load humanize %} NOT WORKING -->
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
     <title>{% block title %}Django App{% endblock title %}</title>
     <link
       rel="icon"
@@ -130,4 +136,5 @@
 
     <footer class="main-footer">System Dashboard &copy; 2024</footer>
   </body>
+  {% block javascript %} {% endblock javascript %}
 </html>
