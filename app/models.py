@@ -18,8 +18,23 @@ class User(AbstractUser):
     objects = CustomUserManager()
     USERNAME_FIELD = "email" # This line is VERY IMPORTANT !! It changes the default username field to email. So now admins can login via email and ONLY email in the admin panel. Earlier only-email login was not possible for admins. It only worked for normal users created via allauth signups.
     
-    # In your User model, you have a field called email. By setting USERNAME_FIELD = "email", you are telling Django: "Hey, whenever you're looking for the unique identifier to log someone in, don't look for a column named 'username'. Look for the column named 'email' instead. Username is the default field Django uses to identify users.
+    # In your User model, you have a field called email. By setting USERNAME_FIELD = "email", you are telling Django: "Hey, whenever you're looking for the unique identifier to log someone in, don't look for a column named 'username'. Look for the column named 'email' instead. Username is the default field Django uses to identify users --> Now it will use E-Mail.
     REQUIRED_FIELDS = [] # username is not required anymore, only email and password are required. But username is still a field in the model, just not required. Also if you wanna get via username, you have to look via email now. As specified above.
+    
+    # GETTER METHODS #
+    
+    # Get total number of articles created by this user #
+    @property
+    def article_count(self):
+        return self.articles.count()
+    
+    # Get total number of Words written by this user across all articles #
+    @property
+    def total_word_count(self):
+        # We explicitly name the result 'total'
+        data = self.articles.aggregate(total=models.Sum('wordCount'))
+        return data['total'] or 0
+    
     
 
 class Article(models.Model):

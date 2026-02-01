@@ -1,65 +1,175 @@
-{% extends 'app/base.html' %} {% block content %}
-<h1>Articles</h1>
+{% extends 'app/base.html' %}
+<!-- {% load humanize %}  INTCOMMA not working -->
+{% block content %}
 
-<div style="margin-bottom: 30px">
-  <a
-    href="{% url 'createArticle' %}"
+<style>
+  /* Container that scales with the screen */
+  .dashboard-container {
+    font-family: "Segoe UI", Roboto, sans-serif;
+    width: 95%; /* High width for a spacious feel */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px 0;
+  }
+
+  /* Stats Header */
+  .stats-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+  }
+
+  /* Grid for Articles */
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(300px, 1fr)
+    ); /* Responsive columns */
+    gap: 25px;
+  }
+
+  .article-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition:
+      transform 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .btn {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    transition: filter 0.2s;
+  }
+
+  .btn-create {
+    background: #007ea8;
+    color: white;
+  }
+  .btn-edit {
+    background: #e3f2fd;
+    color: #0009ba;
+    flex: 1;
+  }
+  .btn-delete {
+    background: #ffebee;
+    color: #d02300;
+    flex: 1;
+  }
+  .btn:hover {
+    filter: brightness(0.9);
+  }
+</style>
+
+<div class="dashboard-container">
+  <header class="stats-header">
+    <div>
+      <h1 style="margin: 0; font-size: 28px; color: #2d3436">My Articles</h1>
+      <p style="margin: 5px 0 0; color: #636e72">
+        Manage your contributions and word counts
+      </p>
+    </div>
+
+    {% if articles %}
+    <div style="text-align: right">
+      <span
+        style="
+          display: block;
+          font-size: 14px;
+          color: #b2bec3;
+          text-transform: uppercase;
+        "
+        >Performance</span
+      >
+      <span style="font-size: 18px; font-weight: bold">
+        📈 {{ user.article_count }} Article{{ user.article_count|pluralize }} |
+        ✍️ {{ user.total_word_count }} Word{{ user.total_word_count|pluralize }}
+      </span>
+    </div>
+    {% endif %}
+  </header>
+
+  <div style="margin-bottom: 30px">
+    <a href="{% url 'createArticle' %}" class="btn btn-create"
+      >✚ Create New Article</a
+    >
+  </div>
+
+  {% if articles %}
+  <div class="article-grid">
+    {% for article in articles %}
+    <div class="article-card">
+      <div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+          "
+        >
+          <span
+            style="
+              background: #f1f2f6;
+              padding: 4px 8px;
+              border-radius: 4px;
+              font-size: 12px;
+              color: #747d8c;
+            "
+            >ID: {{ article.id }}</span
+          >
+        </div>
+        <h3 style="margin: 15px 0 10px; color: #2f3542; line-height: 1.4">
+          {{ article.title }}
+        </h3>
+        <p style="color: #57606f; font-size: 14px">
+          Length: <strong>{{ article.wordCount }}</strong> words
+        </p>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 20px">
+        <a href="{% url 'updateArticle' pk=article.id %}" class="btn btn-edit"
+          >Edit</a
+        >
+        <a href="{% url 'deleteArticle' pk=article.id %}" class="btn btn-delete"
+          >Delete</a
+        >
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div
     style="
-      border: 2px solid black;
-      text-decoration: none;
-      font-size: 18px;
-      font-family: sans-serif;
-      padding: 10px 20px;
-      background-color: rgb(0, 126, 168);
-      color: white;
+      text-align: center;
+      padding: 80px;
+      background: #f9f9f9;
+      border-radius: 20px;
+      border: 2px dashed #dfe4ea;
     "
   >
-    ✚ Create an Article  
-  </a>
+    <h3 style="color: #747d8c">No articles found. Time to start writing!</h3>
+  </div>
+  {% endif %}
 </div>
 
-{% if articles %}
-<ul style="list-style-type: none; padding: 0">
-  {% for article in articles %}
-  <div style="margin-bottom: 40px">
-    <li style="font-size: 20px; font-family: sans-serif; margin-bottom: 10px">
-      🌟<strong
-        >ID: {{ article.id }}&nbsp;&nbsp;&nbsp;{{ article.title }}</strong
-      >
-      with {{ article.wordCount }} word{{ article.wordCount | pluralize }}.
-    </li>
-
-    <a
-      href="{% url 'updateArticle' pk=article.id %}"
-      style="
-        border: 2px solid black;
-        text-decoration: none;
-        font-family: sans-serif;
-        padding: 5px 15px;
-        background-color: rgb(0, 9, 186);
-        color: white;
-        margin-right: 10px;
-      "
-    >
-      Update
-    </a>
-
-    <a
-      href="{% url 'deleteArticle' pk=article.id %}"
-      style="
-        border: 2px solid black;
-        text-decoration: none;
-        font-family: sans-serif;
-        padding: 5px 15px;
-        background-color: rgb(208, 35, 0);
-        color: white;
-      "
-    >
-      Delete
-    </a>
-  </div>
-  {% endfor %}
-</ul>
-{% else %}
-<p>You have no Articles to Show !</p>
-{% endif %} {% endblock content %}
+{% endblock content %}

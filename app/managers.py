@@ -5,6 +5,7 @@ from django.contrib.auth.models import BaseUserManager
 # 💥 password=None: Just a placeholder in the function to prevent errors if a password isn't passed immediately.
 # 💥 set_password(): The "Workhorse." It hashes the string and saves it to the password field in the DB.
 # 💥 Social Auth (allauth): When you sign up via GitHub, allauth calls create_user but doesn't provide a password. Django sets it to an unusable "None" hash, keeping the account secure.
+# 💥 Django Backend based Auth (default django based backend): For Django Backend based signups, the django backend will call create_user, but this time it will use the password provided during signup.
 # 💥 Security Rule: Never save the password directly like user.password = password. Always use set_password().
 #########################################################################
 
