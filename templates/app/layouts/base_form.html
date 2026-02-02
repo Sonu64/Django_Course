@@ -1,0 +1,29 @@
+{% extends 'app/base.html' %} {% block content %} {% endblock %} {% block
+javascript %}
+<script>
+  const easyMDE = new EasyMDE({
+    element: document.getElementById("id_content"),
+    spellChecker: false,
+    status: false,
+    toolbar: [
+      "bold",
+      "italic",
+      "heading",
+      "|",
+      "quote",
+      "unordered-list",
+      "ordered-list",
+      "|",
+      "link",
+      "image",
+      "|",
+      "preview",
+      "side-by-side",
+      "fullscreen",
+      "|",
+      "guide",
+    ],
+    forceSync: true,
+  });
+</script>
+{% endblock javascript %}

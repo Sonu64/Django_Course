@@ -1,4 +1,4 @@
-FROM python:3.13-slim-bullseye
+FROM python:3.13
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
@@ -9,11 +9,13 @@ ENV PYTHONUNBUFFERED=1 \
 RUN apt update
 RUN apt install gettext -y
 
-
+RUN mkdir /code
 WORKDIR /code
 
 # Install poetry
 RUN pip install poetry
+
+RUN pip install "psycopg[binary]"
 
 # Copy dependency files (even if they only contain Python version info for now)
 # Notice I added an asterisk: poetry.lock*. If you haven't run a poetry command yet, you might not have a poetry.lock file. Without that asterisk, Docker will crash saying "File not found." The asterisk tells Docker: "Copy it if it exists, but don't panic if it doesn't."
