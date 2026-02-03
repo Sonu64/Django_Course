@@ -33,9 +33,13 @@ COPY pyproject.toml poetry.lock* ./
 # Install dependencies (will skip if list is empty)
 RUN poetry install --no-root --no-interaction
 
-# Copy your App code
+# Copy your App code, entrypoint.sh copied as well ! Inside /code
 COPY . .
+
+RUN chmod 755 /code/entrypoint.sh 
+# chmod is needed for execution permissions for everyone - Read and Execute !
+# Still it might show Permissions Error on Linux as we are using volumes and volumes are constantly syncing our local file (with no permissions) with the container file (with permissions) ➡️➡️➡️➡️ Will work good in Production, because we don't use volumes there, but in Development on local Linux machines we should change permissions manually by running chmod 755 entrypoint.sh. For windows, Security configs are different, and we don't need to do this manual command running. But since, Containers run on Linux Servers, keeping it here is best💌
 
 EXPOSE 8000
 
-ENTRYPOINT [ "poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+ENTRYPOINT [ "/code/entrypoint.sh" ]
