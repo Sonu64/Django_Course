@@ -402,6 +402,21 @@ django = ">=4.2.9"
 sqlparse = ">=0.2"
 
 [[package]]
+name = "django-widget-tweaks"
+version = "1.5.1"
+description = "Tweak the form field rendering in templates, not in python-level form definitions."
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "django_widget_tweaks-1.5.1-py3-none-any.whl", hash = "sha256:3f5080f8365740fc1c14607498c975cbfed896dd0c40e1b563095716ee31e3b5"},
+    {file = "django_widget_tweaks-1.5.1.tar.gz", hash = "sha256:084acc9eeb5a3208f2670522de6284287973e54d54488ce6d402f4b99bc5f452"},
+]
+
+[package.dependencies]
+django = ">=4.2"
+
+[[package]]
 name = "idna"
 version = "3.11"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -539,4 +554,4 @@ zstd = ["backports-zstd (>=1.0.0) ; python_version < \"3.14\""]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13"
-content-hash = "d5fc5c17e7df54950c2ab2d307c23d395f20530ac56f51c313bea992b4fc83e8"
+content-hash = "5e7a42eb4732779f20f22f867ef1adae51504fb7c326f0da920060441c55606a"

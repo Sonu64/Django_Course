@@ -136,3 +136,15 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+
+# Node and Tailwind
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+postcss.config.js
+static/css/input.css
+static/css/output.css
+tailwind.config.js

@@ -79,6 +79,7 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount', # Creates table to store social account info -> socialaccount_socialaccount, socialaccount_socialapp, socialaccount_socialtoken ! Check DB file bro 😃 MIGRATION NEEDED if you add this after adding only allauth.account and allauth !!!!
     'allauth.socialaccount.providers.github',
+    'widget_tweaks'
 ]
 
 PROJECT_APPS = [
