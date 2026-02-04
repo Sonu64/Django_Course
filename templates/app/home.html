@@ -1,107 +1,23 @@
-{% extends 'app/base.html' %}
-<!-- {% load humanize %}  INTCOMMA not working -->
-{% block content %}
+{% extends 'app/base.html' %} {% block content %}
 
-<style>
-  /* Container that scales with the screen */
-  .dashboard-container {
-    font-family: "Segoe UI", Roboto, sans-serif;
-    width: 95%; /* High width for a spacious feel */
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px 0;
-  }
-
-  /* Stats Header */
-  .stats-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    margin-bottom: 30px;
-  }
-
-  /* Grid for Articles */
-  .article-grid {
-    display: grid;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(300px, 1fr)
-    ); /* Responsive columns */
-    gap: 25px;
-  }
-
-  .article-card {
-    background: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition:
-      transform 0.2s,
-      box-shadow 0.2s;
-  }
-
-  .article-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-
-  .btn {
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-    transition: filter 0.2s;
-  }
-
-  .btn-create {
-    background: #007ea8;
-    color: white;
-  }
-  .btn-edit {
-    background: #e3f2fd;
-    color: #0009ba;
-    flex: 1;
-  }
-  .btn-delete {
-    background: #ffebee;
-    color: #d02300;
-    flex: 1;
-  }
-  .btn:hover {
-    filter: brightness(0.9);
-  }
-</style>
-
-<div class="dashboard-container">
-  <header class="stats-header">
+<div class="mx-auto w-[95%] max-w-[1400px] py-5 font-sans">
+  <header
+    class="mb-8 flex items-center justify-between rounded-xl bg-white p-5 shadow-sm border border-gray-100"
+  >
     <div>
-      <h1 style="margin: 0; font-size: 28px; color: #2d3436">My Articles</h1>
-      <p style="margin: 5px 0 0; color: #636e72">
+      <h1 class="m-0 text-3xl font-bold text-gray-800">My Articles</h1>
+      <p class="mt-1 text-gray-500">
         Manage your contributions and word counts
       </p>
     </div>
 
     {% if articles %}
-    <div style="text-align: right">
+    <div class="text-right">
       <span
-        style="
-          display: block;
-          font-size: 14px;
-          color: #b2bec3;
-          text-transform: uppercase;
-        "
+        class="block text-xs font-semibold uppercase tracking-wider text-gray-400"
         >Performance</span
       >
-      <span style="font-size: 18px; font-weight: bold">
+      <span class="text-lg font-bold text-gray-700">
         📈 {{ user.article_count }} Article{{ user.article_count|pluralize }} |
         ✍️ {{ user.total_word_count }} Word{{ user.total_word_count|pluralize }}
       </span>
@@ -109,65 +25,64 @@
     {% endif %}
   </header>
 
-  <div style="margin-bottom: 30px">
-    <a href="{% url 'createArticle' %}" class="btn btn-create"
-      >✚ Create New Article</a
+  <div class="mb-8">
+    <a
+      href="{% url 'createArticle' %}"
+      class="btn-base btn-primary inline-flex items-center gap-2"
     >
+      <span class="text-lg">✚</span> Create New Article
+    </a>
   </div>
 
   {% if articles %}
-  <div class="article-grid">
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6">
     {% for article in articles %}
-    <div class="article-card">
+    <div
+      class="group flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+    >
       <div>
-        <div
-          style="
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-          "
-        >
+        <div class="flex items-start justify-between">
           <span
-            style="
-              background: #f1f2f6;
-              padding: 4px 8px;
-              border-radius: 4px;
-              font-size: 12px;
-              color: #747d8c;
-            "
-            >ID: {{ article.id }}</span
+            class="rounded bg-gray-100 px-2 py-1 text-xs font-mono text-gray-500"
           >
+            ID: {{ article.id }}
+          </span>
         </div>
-        <h3 style="margin: 15px 0 10px; color: #2f3542; line-height: 1.4">
+        <h3
+          class="mt-4 text-xl font-semibold leading-tight text-gray-800 transition-colors"
+        >
           {{ article.title }}
         </h3>
-        <p style="color: #57606f; font-size: 14px">
-          Length: <strong>{{ article.wordCount }}</strong> words
+        <p class="mt-2 text-sm text-gray-600">
+          Length:
+          <strong class="text-gray-900">{{ article.wordCount }}</strong> words
         </p>
       </div>
 
-      <div style="display: flex; gap: 10px; margin-top: 20px">
-        <a href="{% url 'updateArticle' pk=article.id %}" class="btn btn-edit"
-          >Edit</a
+      <div class="mt-6 flex gap-3">
+        <a
+          href="{% url 'updateArticle' pk=article.id %}"
+          class="btn-base btn-secondary"
         >
-        <a href="{% url 'deleteArticle' pk=article.id %}" class="btn btn-delete"
-          >Delete</a
+          Edit
+        </a>
+        <a
+          href="{% url 'deleteArticle' pk=article.id %}"
+          class="btn-base btn-danger"
         >
+          Delete
+        </a>
       </div>
     </div>
     {% endfor %}
   </div>
   {% else %}
   <div
-    style="
-      text-align: center;
-      padding: 80px;
-      background: #f9f9f9;
-      border-radius: 20px;
-      border: 2px dashed #dfe4ea;
-    "
+    class="rounded-3xl border-2 border-dashed border-gray-200 bg-gray-50 py-20 text-center"
   >
-    <h3 style="color: #747d8c">No articles found. Time to start writing!</h3>
+    <h3 class="text-xl text-gray-500 font-medium">
+      No articles found. Time to start writing!
+    </h3>
   </div>
   {% endif %}
 </div>
