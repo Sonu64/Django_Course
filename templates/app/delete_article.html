@@ -1,35 +1,31 @@
 {% extends 'app/base.html' %} {% block content %}
-<h1>Are you sure you wanna delete {{ article.title }} ?</h1>
-<a
-  href=" {% url 'home' %} "
-  style="
-    border: 2px solid black;
-    text-decoration: none;
-    font-size: 18px;
-    font-family: sans-serif;
-    padding: 10px 20px;
-    background-color: rgb(0, 113, 89);
-    color: white;
-  "
-  >No, Take Me Back !</a
+
+<form
+  action=""
+  method="POST"
+  class="h-[100vh-28px] flex flex-col justify-center items-center mt-10"
 >
-<form action="" method="POST">
+  <h1 class="text-[35px] font-bold text-slate-800 mb-2">Delete Article</h1>
+  <p class="text-slate-600 mb-2 text-[17px]">
+    Are you sure you want to permanently delete
+    <span class="font-semibold text-slate-700">"{{ article.title }}"</span>?
+  </p>
   {% csrf_token %}
-  <button
-    type="submit"
-    style="
-      border: 2px solid black;
-      text-decoration: none;
-      font-size: 18px;
-      font-family: sans-serif;
-      padding: 10px 20px;
-      background-color: rgb(238, 40, 0);
-      color: white;
-      margin-top: 20px;
-      cursor: pointer;
-    "
-  >
-    Yes, Delete
-  </button>
+  <div class="buttons flex gap-3 mt-5 items-center justify-center w-[500px]">
+    <a
+      href="{% url 'home' %}"
+      class="btn-base btn-success group transition-all duration-300 hover:-translate-y-1 inline-block w-[40%] py-2 text-center"
+    >
+      <i class="fa-solid fa-arrow-left right-1 relative"></i>
+      No, Take Me Back
+    </a>
+
+    <button
+      type="submit"
+      class="btn-base btn-danger transition-all duration-300 hover:-translate-y-1 inline-block w-[40%] py-2 text-center"
+    >
+      <i class="fa-solid fa-trash right-1 relative"></i> Yes, Delete
+    </button>
+  </div>
 </form>
 {% endblock content %}

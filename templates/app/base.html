@@ -1,24 +1,41 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <link
-         rel="stylesheet"
-         href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css"
-         />
-      <link rel="stylesheet" href="{% static 'css/output.css' %}" />
-      <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-      <title>{% block title %}Medical Dashboard{% endblock title %}</title>
-      <link
-         rel="icon"
-         type="image/x-icon"
-         href="{% static 'images/favicon.ico' %}"
-         />
-   </head>
-   <body class="bg-slate-100 min-h-screen flex flex-col font-sans text-slate-900">
-      <!-- The Lookup Process
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://kit.fontawesome.com/a3d72c8bc7.js"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'css/output.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+    <title>{% block title %}Medical Dashboard{% endblock title %}</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{% static 'images/favicon.ico' %}"
+    />
+    <style>
+      * {
+        font-family: "Google Sans", sans-serif;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-slate-100 min-h-screen flex flex-col font-sans text-slate-900"
+  >
+    <!-- The Lookup Process
          When you write {% url 'home' %}, Django performs a "Reverse URL Resolution":
          
          It scans all your urls.py files.
@@ -28,55 +45,62 @@
          The allauth names are defined in its own account/urls.py file. Like account_email for changing email, account_logout for logging out, etc.
          
          It returns the actual string (e.g., /home/ or /) and injects it into your HTML. -->
-      {% url 'home' as home_url %}
-      {% url 'createArticle' as create_article_url %}
-      {% url 'account_email' as change_email_url %}
-      {% url 'createArticle' as create_article_url %}
-      <nav class="navbar">
-         <div class="left flex flex-row gap-4">
-            <div class="flex items-center">
-               <a href="{{ home_url }}" class="
-                  {% if request.path == home_url %}text-blue-700 text-[17px] font-bold {% endif %}
-                  link-base
-                  ">Home</a>
-            </div>
-            <div class="flex items-center">
-               <a href="{% url 'home' %}" class="link-base">Articles</a>
-            </div>
-            <div class="flex items-center">
-               <a href="{{ change_email_url }}" class="
-                  {% if request.path == change_email_url %}text-blue-700 text-[17px] font-bold {% endif %}
-                  link-base
-                  ">Change E-mail</a>
-            </div>
-         </div>
-         <div class="flex items-center gap-2">
-            {% if user.is_authenticated %}
-            <div
-               class="flex items-center px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200"
-               >
-               <span
-                  class="text-sm font-bold text-slate-600 flex items-center gap-2"
-                  >
-               <span
-                  class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
-                  ></span>
-               {{ user.username }}
-               </span>
-            </div>
-            <form action="{% url 'account_logout' %}" method="POST" class="m-0">
-               {% csrf_token %}
-               <button type="submit" class="btn-base btn-danger btn-logout" style="outline: 0cm;" >Logout</button>
-            </form>
-            {% endif %}
-         </div>
-      </nav>
-      <main class="grow">
-         <div class="max-w-[1400px] mx-auto px-6 py-8 my-17">
-            {% block content %}{% endblock content %}
-         </div>
-      </main>
-      <footer class="bg-slate-900 text-white border-t border-slate-800 flex flex-col items-center justify-center py-7">
+    {% url 'home' as home_url %} {% url 'createArticle' as create_article_url %}
+    {% url 'account_email' as change_email_url %} {% url 'createArticle' as
+    create_article_url %}
+    <nav class="navbar">
+      <div class="left flex flex-row gap-4">
+        <div class="flex items-center">
+          <a
+            href="{{ home_url }}"
+            class="{% if request.path == home_url %}text-blue-700 text-[17px] font-bold {% endif %} link-base"
+            >Home</a
+          >
+        </div>
+        <div class="flex items-center">
+          <a href="{% url 'home' %}" class="link-base">Articles</a>
+        </div>
+        <div class="flex items-center">
+          <a
+            href="{{ change_email_url }}"
+            class="{% if request.path == change_email_url %}text-blue-700 text-[17px] font-bold {% endif %} link-base"
+            >Change E-mail</a
+          >
+        </div>
+      </div>
+      <div class="flex items-center gap-2">
+        {% if user.is_authenticated %}
+        <div
+          class="flex items-center px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200"
+        >
+          <span
+            class="text-sm font-bold text-slate-600 flex items-center gap-2"
+          >
+            <span
+              class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
+            ></span>
+            {{ user.username }}
+          </span>
+        </div>
+        <form action="{% url 'account_logout' %}" method="POST" class="m-0">
+          {% csrf_token %}
+          <button
+            type="submit"
+            class="btn-base btn-danger btn-logout"
+            style="outline: 0cm"
+          >
+            Logout
+          </button>
+        </form>
+        {% endif %}
+      </div>
+    </nav>
+    <main class="grow">
+      <div class="max-w-[1400px] mx-auto px-6 py-8 my-7">
+        {% block content %}{% endblock content %}
+      </div>
+    </main>
+    <!-- <footer class="bg-slate-900 text-white border-t border-slate-800 flex flex-col items-center justify-center py-7">
          <div class="max-w-[1400px] mx-auto px-6 text-center">
          <h2 class="text-xl font-bold tracking-tight mb-1.5">
             Articles App &copy; 2026;
@@ -84,7 +108,7 @@
          <p class="text-slate-400 text-sm max-w-md mx-auto">
             Write Articles and Track Your Word Count with Ease. Built with Django and Tailwind CSS.
          </p>
-      </footer>
-      {% block javascript %}{% endblock javascript %}
-   </body>
+      </footer> -->
+    {% block javascript %}{% endblock javascript %}
+  </body>
 </html>
