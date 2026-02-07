@@ -1,29 +1,38 @@
-{% extends 'app/base.html' %} {% block content %} {% endblock %} {% block
-javascript %}
+{% extends 'app/base.html' %}
+{% block content %} {% endblock %}
+{% block javascript %}
 <script>
-  const easyMDE = new EasyMDE({
-    element: document.getElementById("id_content"),
-    spellChecker: false,
-    status: false,
-    toolbar: [
-      "bold",
-      "italic",
-      "heading",
-      "|",
-      "quote",
-      "unordered-list",
-      "ordered-list",
-      "|",
-      "link",
-      "image",
-      "|",
-      "preview",
-      "side-by-side",
-      "fullscreen",
-      "|",
-      "guide",
-    ],
-    forceSync: true,
+  document.addEventListener("DOMContentLoaded", function () {
+    const markdownElement = document.getElementById("id_content");
+
+    if (markdownElement) {
+      const easyMDE = new EasyMDE({
+        element: markdownElement,
+        spellChecker: false,
+        status: false,
+        forceSync: true,
+        toolbar: [
+          "bold",
+          "italic",
+          "heading",
+          "|",
+          "quote",
+          "unordered-list",
+          "ordered-list",
+          "|",
+          "link",
+          "image",
+          "|",
+          "preview",
+          "side-by-side",
+          "fullscreen",
+          "|",
+          "guide",
+        ],
+      });
+    } else {
+      console.warn("EasyMDE: Element #id_content not found!");
+    }
   });
 </script>
-{% endblock javascript %}
+{% endblock %}

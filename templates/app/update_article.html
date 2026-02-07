@@ -1,4 +1,4 @@
-{% extends 'app/base.html' %} {% block content %}
+{% extends 'app/layouts/base_form.html' %} {% block content %}
 <h1>
   Update Article with Title
   <span style="color: red; font-weight: bold; font-family: sans-serif"
@@ -18,50 +18,9 @@
   "
   >Cancel</a
 >
-<!-- <a
-  href=" {% url 'deleteArticle' pk=article.id %} "
-  style="
-    border: 2px solid black;
-    text-decoration: none;
-    font-size: 18px;
-    font-family: sans-serif;
-    padding: 10px 20px;
-    background-color: red;
-    color: white;
-  "
-  >Delete this Article</a
-> -->
-<!-- <h1>Update Article with content {{ article.content | safe }}</h1> if we wanna avoid auto-escape ! Not Recommended ! -->
 <p>Article was last updated on {{ article.updatedAt | date:"jS F Y, P"}}</p>
 <form action="" method="POST">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit">Update Article</button>
 </form>
-{% endblock content %}{% block javascript %}
-<script>
-  const easyMDE = new EasyMDE({
-    element: document.getElementById("id_content"),
-    spellChecker: false,
-    status: false,
-    toolbar: [
-      "bold",
-      "italic",
-      "heading",
-      "|",
-      "quote",
-      "unordered-list",
-      "ordered-list",
-      "|",
-      "link",
-      "image",
-      "|",
-      "preview",
-      "side-by-side",
-      "fullscreen",
-      "|",
-      "guide",
-    ],
-    forcesync: true,
-  });
-</script>
-{% endblock javascript %}
+{% endblock content %}
