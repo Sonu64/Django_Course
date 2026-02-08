@@ -1,5 +1,25 @@
 {% extends 'app/base.html' %}
-{% block content %} {% endblock %}
+{% load widget_tweaks %}
+{% block content %}
+  <form action="" method="POST">
+    {% csrf_token %} 
+    
+    {% render_field form.title %}
+
+    {% block article_stats %} {% endblock %}
+
+    {% render_field form.status %}
+    <!--  Form fields displayed manually by widget_tweaks
+      widget_tweaks just manages the styling ==> Does not give auto labels like form.as_p does. We have to add labels Manually. It keeps Djangos default UpdateView, CreateView or DeleteView Logic intact
+    -->
+
+    {% render_field form.content %}
+
+    {% render_field form.twitterPost %}
+
+    {% block buttons %} {% endblock %}
+  </form>
+{% endblock %}
 {% block javascript %}
 <script>
   document.addEventListener("DOMContentLoaded", function () {

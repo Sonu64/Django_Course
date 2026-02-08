@@ -1,22 +1,4 @@
 {% extends 'app/layouts/base_form.html' %}
-{% block content %}
-<h1>Create an Article</h1>
-<a
-  href=" {% url 'home' %} "
-  style="
-    border: 2px solid black;
-    text-decoration: none;
-    font-size: 18px;
-    font-family: sans-serif;
-    padding: 10px 20px;
-    background-color: red;
-    color: white;
-  "
-  >Cancel</a
->
-<form action="" method="POST">
-  {% csrf_token %} {{ form.as_p }}
-  <button type="submit">Post Article</button>
-</form>
-
+{% block buttons %}
+  <button type="submit">Create Article</button>
 {% endblock %}
