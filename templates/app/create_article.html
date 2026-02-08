@@ -1,4 +1,6 @@
 {% extends 'app/layouts/base_form.html' %}
+{% block article_stats %}{% endblock %}
 {% block buttons %}
-  <button type="submit">Create Article</button>
+<a href="{% url 'home' %}" class="btn-base btn-secondary">Cancel</a>
+  <button type="submit" class="btn-base btn-primary">Create Article</button>
 {% endblock %}

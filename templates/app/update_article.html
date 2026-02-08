@@ -1,12 +1,11 @@
 {% extends 'app/layouts/base_form.html' %} 
 
 {% block article_stats %}
-  <p>Article was last updated on {{ article.updatedAt | date:"jS F Y, P"}}</p>
+  <p>Last updated: <span class="font-semibold">{{ article.updatedAt | date:"jS F Y, P" }}</span></p>
   <p>{{ article.wordCount }} word{{ article.wordCount | pluralize }}.</p>
 {% endblock %}
 
 {% block buttons %} 
-  <button type="submit">Update Article</button>
+  <a href="{% url 'home' %}" class="btn-base btn-secondary">Cancel</a>
+  <button type="submit" class="btn-base btn-primary">Update Article</button>
 {% endblock %}
-
-
