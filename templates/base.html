@@ -18,6 +18,7 @@
     {% url 'createArticle' as create_article_url %}
     {% url 'account_email' as change_email_url %}
 
+    {% block navbar %}
     <nav class="navbar">
       <div class="left flex flex-row gap-4">
           <a href="{{ home_url }}" class="
@@ -45,15 +46,20 @@
         {% endif %}
       </div>
     </nav>
+    {% endblock %}
+
+    
 
      <main class="grow">
 
       <div class="max-w-[1400px] mx-auto px-6 py-8 mt-[80px]">
 
         {% block content %}
-
-           
-
+          {% if not user.is_authenticated %}
+          <p class="text-red-800">THESE BUTTONS SHOULD GO IN NAVBAR</p>
+            <a href="{% url 'account_login' %}" class="btn-base btn-primary">Login</a>
+            <a href="{% url 'account_signup' %}" class="btn-base btn-secondary">Sign Up</a>
+          {% endif %}
         {% endblock %}
 
       </div>
