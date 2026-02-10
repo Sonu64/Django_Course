@@ -16,9 +16,36 @@ ARTICLE_STATUS = (
 class User(AbstractUser):
     email = models.EmailField(_("Email Address"), unique=True)
     objects = CustomUserManager()
-    USERNAME_FIELD = "email" # This line is VERY IMPORTANT !! It changes the default username field to email. So now admins can login via email and ONLY email in the admin panel. Earlier only-email login was not possible for admins. It only worked for normal users created via allauth signups.
+    USERNAME_FIELD = "email" 
     
-    # In your User model, you have a field called email. By setting USERNAME_FIELD = "email", you are telling Django: "Hey, whenever you're looking for the unique identifier to log someone in, don't look for a column named 'username'. Look for the column named 'email' instead. Username is the default field Django uses to identify users --> Now it will use E-Mail.
+    # By default, Django's "lock" is configured to accept a "Username" key. By setting USERNAME_FIELD = "email", you are re-keying the lock.You are changing the Authentication key from Username to E-mail !!
+    
+    # This line is VERY IMPORTANT !! It changes the authentication key. So now admins can login via email and ONLY email in the admin panel. Earlier only-email login was not possible for admins. It only worked for normal users created via allauth signups. Currently the auth key is only the E-Mail.
+    
+#     Here is exactly what’s happening: even though your models.py doesn't have the "magic" code (to automatically extract username from the email) yet, Django Allauth has a built-in "Username Generator." ### The Mystery Solved
+# When you sign up using Allauth with ACCOUNT_AUTHENTICATION_METHOD = "email", Allauth looks at your database and sees that the username column still exists (thanks to AbstractUser). Because it doesn't want to leave that field empty (which can crash certain Django features), it automatically:
+# Takes your email: dr.smith@clinic.com.
+# Strips the domain: dr.smith.
+# Cleans it: Removes illegal characters.
+# Saves it into the username column.
+# So, when you call {{ user.username }} in your navbar, you are seeing the "cached" version of that extraction that Allauth performed the moment you clicked "Sign Up."
+
+# The "Gotcha" (Why you still need the code)
+# While Allauth is doing this for you during Sign Up, it won't happen if:
+
+# You create a user via the Django Admin panel.
+
+# You create a user via the Python Shell (User.objects.create_user).
+
+# You update your email later (the username will stay stuck as the old one).
+
+# Notepad Summary: Allauth Magic
+# The Ghost in the Machine: Allauth automatically populates the username field from the email prefix during the signup process.
+
+# Storage: This value is physically stored in your DB, which is why {{ user.username }} works in the navbar.
+
+# Consistency: To ensure this happens everywhere (Admin, Shell, Updates), you should still add that save() method logic we discussed in models.py.
+
     REQUIRED_FIELDS = [] # username is not required anymore, only email and password are required. But username is still a field in the model, just not required. Also if you wanna get via username, you have to look via email now. As specified above.
     
     # GETTER METHODS #
