@@ -1,0 +1,29 @@
+{% load socialaccount %}
+{% get_providers as socialaccount_providers %}
+
+<!-- This is used to Override some default behaviours of the Login page if social account is enabled. Ex:- Remove the "Sign in with" text and the "hr " element -->
+
+<div class="space-y-3">
+  {% for provider in socialaccount_providers %}
+    {% if provider.id == "openid" %}
+      {% for brand in provider.get_brands %}
+        <div class="flex">
+          <a title="{{ brand.name }}" 
+             class="w-full flex items-center justify-center gap-3 px-4 py-3 border border-slate-300 rounded-lg shadow-sm bg-white text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all"
+             href="{% provider_login_url provider.id openid=brand.openid_url process=process %}">
+             Sign in with {{ brand.name }}
+          </a>
+        </div>
+      {% endfor %}
+    {% endif %}
+    
+    <div class="flex">
+      <a title="{{ provider.name }}" 
+         class="w-full flex items-center justify-center gap-3 px-4 py-3 border border-slate-300 rounded-lg shadow-sm bg-white text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all"
+         href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
+         <i class="fa-brands fa-{{ provider.name | lower }} text-lg"></i>
+         {{ provider.name }}
+      </a>
+    </div>
+  {% endfor %}
+</div>
