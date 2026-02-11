@@ -1,7 +1,7 @@
 {% load socialaccount %}
 {% get_providers as socialaccount_providers %}
 
-<!-- This is used to Override some default behaviours of the Login page if social account is enabled. Ex:- Remove the "Sign in with" text and the "hr " element -->
+<!-- This is used to Override some default behaviours of the Login page if social account is enabled. Ex:- Remove the "Sign in with" text and the "hr" element -->
 
 <div class="space-y-3">
   {% for provider in socialaccount_providers %}

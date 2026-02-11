@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load allauth %}
+{% block content %}
+    <main class="flex w-full p-6 md:flex-row flex-col">
+        <section class="left md:w-[50%] w-full p-6">
+            <p class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-[1.1] text-slate-900 tracking-tighter">
+                <span class="block mb-1">Write and Collaborate</span>
+                <span class="block"> 
+                    on your <span class="text-indigo-700">next Piece</span>
+                </span>
+            </p>
+            <p class="mt-6 text-slate-600 text-lg">
+                Write on our platform for maximum exposure and collaborate with other writers to create something amazing. Join our community of passionate writers and share your work with the world.
+            </p>
+        </section>
+        <section class="right bg-yellow-200 md:w-[50%] w-full p-6">
+            RIGHT SIDE SIGNUP FORM
+        </section>
+    </main>
+{% endblock %}
