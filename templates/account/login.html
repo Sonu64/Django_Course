@@ -2,21 +2,25 @@
 {% load widget_tweaks %}
 
 {% block content %}
-<div class="flex -mt-2 flex-col px-6 lg:px-8">
+<main class="mx-auto max-w-7xl w-full flex flex-col items-center justify-center px-6 py-2">
     
-    <div class="sm:mx-auto sm:w-full sm:max-w-md text-center mb-4">
-        <h1 class="text-2xl font-extrabold text-slate-900 tracking-tight">Sign In into your Account</h1>
-        <p class="mt-1 text-xs text-slate-500">Enter credentials to continue</p>
-    </div>
+    <div class="w-full max-w-md text-center mb-6">
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-black text-slate-900 tracking-tighter transition-all">
+        Welcome <span class="text-indigo-700">Back</span>
+    </h1>
+    <p class="mt-2 text-sm md:text-base text-slate-500 leading-relaxed">
+        Enter your credentials to access your account.
+    </p>
+</div>
 
-    <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <div class="bg-white py-6 px-8 shadow-lg border border-slate-200 rounded-xl">
-            <form action="{% url 'account_login' %}" method="POST" class="space-y-4">
+    <div class="w-full max-w-md">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl border border-slate-100">
+            <form action="{% url 'account_login' %}" method="POST" class="space-y-5">
                 {% csrf_token %}
 
                 {% if form.errors %}
-                <div class="bg-red-50 border-l-4 border-red-500 p-3 mb-2">
-                    <div class="text-xs font-semibold text-red-700">
+                <div class="bg-red-50 border-l-4 border-red-500 p-3 rounded">
+                    <div class="text-xs font-bold text-red-700 space-y-1">
                         {% for field, errors in form.errors.items %}
                             {% for error in errors %}<p>⚠️ {{ error }}</p>{% endfor %}
                         {% endfor %}
@@ -24,47 +28,51 @@
                 </div>
                 {% endif %}
 
-                <div>
-                    <label for="{{ form.login.id_for_label }}" class="sr-only">E-Mail</label>
-                    {% render_field form.login class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" placeholder="E-Mail Address" %}
+                <div class="space-y-3">
+                    <div class="relative">
+                        <label for="{{ form.login.id_for_label }}" class="sr-only">E-Mail Address</label>
+                        {% render_field form.login class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all bg-slate-50" placeholder="E-Mail Address" %}
+                    </div>
+
+                    <div class="relative">
+                        <label for="{{ form.password.id_for_label }}" class="sr-only">Password</label>
+                        {% render_field form.password class="w-full px-4 py-3 text-sm rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 outline-none transition-all bg-slate-50" placeholder="Password" %}
+                    </div>
                 </div>
 
-                <div>
-                    <label for="{{ form.password.id_for_label }}" class="sr-only">Password</label>
-                    {% render_field form.password class="w-full px-3 py-2 text-sm rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all" placeholder="Password" %}
-                </div>
-
-                <div class="flex items-center">
-                    {% render_field form.remember class="h-3.5 w-3.5 text-blue-600 focus:ring-blue-500 border-slate-300 rounded cursor-pointer" %}
-                    <label for="{{ form.remember.id_for_label }}" class="ml-2 block text-xs text-slate-600 cursor-pointer select-none">
-                        Remember Me
-                    </label>
-                </div>
-
-                <div>
-                    <button type="submit" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all transform active:scale-[0.98]">
-                        Sign In
-                    </button>
-                </div>
-
-                <div class="flex items-center justify-between pt-3 border-t border-slate-50">
-                    <a href="{% url 'account_reset_password' %}" class="text-[11px] font-semibold text-blue-600 hover:text-blue-700">
-                        Forgot password
-                    </a>
-                    <a href="{% url 'account_signup' %}" class="text-[11px] font-semibold text-blue-600 hover:text-blue-700">
-                        Sign up instead?
+                <div class="flex items-center justify-between px-1">
+                    <div class="flex items-center gap-2">
+                        {% render_field form.remember class="h-4 w-4 text-indigo-600 border-slate-300 rounded cursor-pointer focus:ring-indigo-500" %}
+                        <label for="{{ form.remember.id_for_label }}" class="text-[11px] text-slate-500 cursor-pointer font-medium select-none">
+                            Remember Me
+                        </label>
+                    </div>
+                    <a href="{% url 'account_reset_password' %}" class="text-[11px] font-bold text-indigo-700 hover:underline">
+                        Forgot Password?
                     </a>
                 </div>
+
+                <button type="submit" class="group w-full py-3 bg-indigo-700 hover:bg-indigo-800 text-white font-bold rounded-xl shadow-md transition-all active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2">
+                    <span>Sign In</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:translate-x-1" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+
+                <p class="text-center text-xs text-slate-500 pt-2">
+                    Don't have an account? 
+                    <a href="{% url 'account_signup' %}" class="font-bold text-indigo-700 hover:underline">Create One</a>
+                </p>
 
                 {% if SOCIALACCOUNT_ENABLED %} 
-                    <div class="relative py-1">
-                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-100"></div></div>
-                        <div class="relative flex justify-center text-[10px] uppercase tracking-wider"><span class="bg-white px-2 text-slate-400">Or Continue with</span></div>
-                    </div>
-                    {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+                <div class="relative py-2">
+                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-100"></div></div>
+                    <div class="relative flex justify-center text-[10px] uppercase font-bold tracking-widest text-slate-400"><span class="bg-white px-4">Or sign in with</span></div>
+                </div>
+                {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
                 {% endif %}
             </form>
         </div>
     </div>
-</div>
+</main>
 {% endblock %}
