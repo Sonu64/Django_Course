@@ -1,0 +1,22 @@
+{% load allauth %}
+{% comment %} djlint:off {% endcomment %}
+
+<{% if attrs.href %}a href="{{ attrs.href }}"{% else %}button{% endif %}
+    {% if attrs.form %}form="{{ attrs.form }}"{% endif %}
+    {% if attrs.id %}id="{{ attrs.id }}"{% endif %}
+    {% if attrs.name %}name="{{ attrs.name }}"{% endif %}
+    {% if attrs.value %}value="{{ attrs.value }}"{% endif %}
+    {% if attrs.type %}type="{{ attrs.type }}"{% endif %}
+    
+    class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-sm font-bold rounded-xl shadow-md transition-all active:scale-[0.98] cursor-pointer w-full focus:outline-none focus:ring-2 focus:ring-offset-2 
+    {% if attrs.name == 'action_add' %}
+        bg-emerald-600 hover:bg-emerald-700 text-white focus:ring-emerald-500
+    {% elif attrs.name == 'action_remove' %}
+        bg-red-600 hover:bg-red-700 text-white focus:ring-red-500
+    {% else %}
+        bg-indigo-700 hover:bg-indigo-800 text-white focus:ring-indigo-500
+    {% endif %}"
+>
+    {% slot %}
+    {% endslot %}
+</{% if attrs.href %}a{% else %}button{% endif %}>

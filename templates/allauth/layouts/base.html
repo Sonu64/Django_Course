@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block base_content %}
+    <main class="min-h-screen bg-slate-50 flex flex-col items-center px-6">
+
+        <!-- The following class (allauth-content-wrapper) is used to do styling, check Global base.html -->
+            <div class="allauth-content-wrapper [&_form]:flex [&_form]:flex-col [&_form]:gap-4 w-full md:max-w-lg bg-white p-8 rounded-2xl shadow-2xl border border-slate-100">
+     
+
+            {% block content %} 
+            
+            <!-- This part is allauth provided content block, auto inherited in every allauth page (like email.html) as every allauth page inherits from allauth/layouts/base.html => We need them to inherit from this page instead, where we apply style to the allauth content block by wrapping it in our base_content -->
+
+            <!-- But where the hell will I style the buttons ? => All buttons used by allauth are used from buttons.html under elements. So see the code there, copy-pasted from the allauth github repo, and the styles to the buttons are actually applied there. There are no buttons here to style 😅 -->
+
+            {% endblock %}
+        </div>
+    </main>
+{% endblock %}

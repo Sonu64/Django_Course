@@ -2,6 +2,50 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      .allauth-content-wrapper strong {
+        color: rgb(1, 114, 1);
+        background-color: #5aff86;
+        width: 35px;
+        text-align: center;
+        padding: 2px 10px;
+        border: 2px solid rgb(1, 114, 1);;
+        border-radius: 50px;
+        margin-left: 5px;
+        font-size: 12px;
+      }
+      .allauth-content-wrapper label {
+        font-size: 16px;
+        color: rgb(103, 1, 198);
+        font-weight: bold;
+        margin-top: 150px;
+      }
+      .allauth-content-wrapper h1 {
+        margin-bottom: 30px;
+        background-color: rgb(250, 250, 189);
+        padding: 5px 25px;
+        font-size: 25px;
+        font-weight: bold;
+      }
+      .allauth-content-wrapper h2 {
+        /**margin-bottom: 0px;**/
+        font-weight: 800;
+        margin-top: 20px;
+        color: rgb(115, 1, 87);
+        background-color: rgb(246, 207, 255);
+        padding: 5px 25px;
+        font-size: 17px;
+      }
+      .allauth-content-wrapper #id_email {
+        margin-top: 20px;
+      }
+      .allauth-content-wrapper p {
+        text-decoration: underline;
+      }
+      .allauth-content-wrapper button[type='radio'] {
+        cursor: pointer;
+      }
+    </style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap" rel="stylesheet" />
@@ -54,7 +98,7 @@
 
       <div class="max-w-[1400px] mx-auto px-6 py-8 mt-[80px]">
 
-        {% block content %}
+        {% block base_content %}
           {% if not user.is_authenticated %}
           <p class="text-red-800">THESE BUTTONS SHOULD GO IN NAVBAR</p>
             <a href="{% url 'account_login' %}" class="btn-base btn-primary">Login</a>
@@ -66,6 +110,19 @@
 
     </main>
 
-    {% block javascript %}{% endblock %}
+    {% block javascript %}
+    <script>      
+      // Find all <p> tags and color them if they contain "Error"
+      document.querySelectorAll('p').forEach(p => {
+        if (p.textContent.includes("The following email addresses are associated with your account:") || p.textContent.includes("Email:")) {
+            p.style.color = 'indigo';
+            p.classList.add('font-bold');
+            p.classList.add('mb-4');
+            p.style.textDecoration = 'none';
+        }
+      });
+</script>
+
+    {% endblock %}
   </body>
 </html>
