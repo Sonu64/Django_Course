@@ -3,6 +3,7 @@
 <html lang="en">
   <head>
     <style>
+      
       .allauth-content-wrapper strong {
         color: rgb(1, 114, 1);
         background-color: #5aff86;
@@ -16,31 +17,31 @@
       }
       .allauth-content-wrapper label {
         font-size: 16px;
-        color: rgb(103, 1, 198);
-        font-weight: bold;
-        margin-top: 150px;
+        color: darkred;
+        font-weight: bold; 
       }
       .allauth-content-wrapper h1 {
-        margin-bottom: 30px;
-        background-color: rgb(250, 250, 189);
-        padding: 5px 25px;
+        margin-bottom: 10px;
+        /*background-color: rgb(250, 250, 189);*/
+        /*padding: 5px 25px;*/
         font-size: 25px;
         font-weight: bold;
       }
       .allauth-content-wrapper h2 {
         /**margin-bottom: 0px;**/
         font-weight: 800;
-        margin-top: 20px;
-        color: rgb(115, 1, 87);
-        background-color: rgb(246, 207, 255);
-        padding: 5px 25px;
+        margin-top: 50px;
+        border-left: 3px solid rgb(0, 213, 110);
+        background-color: rgba(0, 213, 110, 0.172);
+        padding: 10px 15px; 
         font-size: 17px;
+        margin-bottom: 0px;
       }
       .allauth-content-wrapper #id_email {
         margin-top: 20px;
       }
       .allauth-content-wrapper p {
-        text-decoration: underline;
+        /**text-decoration: underline;**/
       }
       .allauth-content-wrapper button[type='radio'] {
         cursor: pointer;
@@ -114,11 +115,15 @@
     <script>      
       // Find all <p> tags and color them if they contain "Error"
       document.querySelectorAll('p').forEach(p => {
-        if (p.textContent.includes("The following email addresses are associated with your account:") || p.textContent.includes("Email:")) {
-            p.style.color = 'indigo';
+        if (p.textContent.includes("The following email addresses are associated with your account:")) {
             p.classList.add('font-bold');
-            p.classList.add('mb-4');
-            p.style.textDecoration = 'none';
+            p.classList.add('mb-[20px]');
+            p.classList.add('mt-0')
+            p.classList.add('py-[10px]');
+            p.classList.add('px-[15px]');
+            p.classList.add('border-l-[3px]');
+            p.classList.add('border-l-blue-400');
+            p.classList.add('bg-blue-100');
         }
       });
 </script>
