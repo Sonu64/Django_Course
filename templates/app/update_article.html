@@ -1,4 +1,5 @@
-{% extends 'app/layouts/base_form.html' %} 
+{% extends 'app/layouts/base_form.html' %}
+{% block title %} - Edit Writing {% endblock %}  
 
 {% block article_stats %}
   <p>Last updated: <span class="font-semibold">{{ article.updatedAt | date:"jS F Y, P" }}</span></p>

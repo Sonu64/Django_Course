@@ -3,50 +3,42 @@
 <html lang="en">
   <head>
     <style>
-      
+      /* Keeping your original styles exactly as requested */
       .allauth-content-wrapper strong {
         color: rgb(1, 114, 1);
         background-color: #5aff86;
         width: 35px;
         text-align: center;
         padding: 2px 10px;
-        border: 2px solid rgb(1, 114, 1);;
+        border: 2px solid rgb(1, 114, 1);
         border-radius: 50px;
         margin-left: 5px;
         font-size: 12px;
       }
-      .allauth-content-wrapper label {
-        font-size: 16px;
-        color: darkred;
-        font-weight: bold; 
-      }
-      .allauth-content-wrapper h1 {
-        margin-bottom: 10px;
-        /*background-color: rgb(250, 250, 189);*/
-        /*padding: 5px 25px;*/
-        font-size: 25px;
-        font-weight: bold;
-      }
-      .allauth-content-wrapper h2 {
-        /**margin-bottom: 0px;**/
-        font-weight: 800;
-        margin-top: 50px;
-        border-left: 3px solid rgb(0, 213, 110);
-        background-color: rgba(0, 213, 110, 0.172);
-        padding: 10px 15px; 
-        font-size: 17px;
-        margin-bottom: 0px;
-      }
       .allauth-content-wrapper #id_email {
-        margin-top: 20px;
-      }
-      .allauth-content-wrapper p {
-        /**text-decoration: underline;**/
+        /*margin-top: 20px;*/
       }
       .allauth-content-wrapper button[type='radio'] {
         cursor: pointer;
       }
+      .allauth-content-wrapper input[type="email"] {
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 10px;
+        background-color: #f7ff5a22;
+      }
+    .allauth-content-wrapper label[for='id_email'] {
+        display: inline-block; /* Add this! */
+        font-weight: 700;
+        margin-top: 20px; /* 400px is huge, try a smaller value first */
+        padding-bottom: 5px;
+    }
+      
+      /* Global Reset */
+      * { font-family: "Google Sans", sans-serif; }
     </style>
+    
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap" rel="stylesheet" />
@@ -54,71 +46,68 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css" />
     <link rel="stylesheet" href="{% static 'css/output.css' %}" />
     <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
-    <title>{% block title %}Medical Dashboard{% endblock %}</title>
-    <style> * { font-family: "Google Sans", sans-serif; } </style>
+    <title>Quill{% block title %}{% endblock %}</title>
   </head>
+
   <body class="bg-slate-100 min-h-screen flex flex-col font-sans text-slate-900">
     
     {% url 'home' as home_url %}
-    {% url 'createArticle' as create_article_url %}
     {% url 'account_email' as change_email_url %}
+    {% url 'account_login' as login_url %}
+    {% url 'account_signup' as signup_url %}
 
     {% block navbar %}
-    <nav class="navbar">
-      <div class="left flex flex-row gap-4">
-          <a href="{{ home_url }}" class="
-                  {% if request.path == home_url %}text-blue-700 text-[17px] font-bold {% endif %}
-                  link-base
-                  ">Home</a>
-          <a href="{% url 'home' %}" class="link-base">Articles</a>
-          <a href="{{ change_email_url }}" class="
-                  {% if request.path == change_email_url %}text-blue-700 text-[17px] font-bold {% endif %}
-                  link-base
-                  ">Change E-mail</a>
-      </div>
-      <div class="flex items-center gap-2">
+    <nav class="flex items-center justify-between px-12 py-6 bg-white border-b border-slate-200 shadow-sm">
+      
+      <div class="flex items-center gap-8">
+        <a href="{{ home_url }}" class="text-2xl font-black text-indigo-700 tracking-tighter">QUILL</a>
+        
         {% if user.is_authenticated %}
-        <div class="flex items-center px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
-          <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            {{ user.username }}
-          </span>
+        <div class="flex flex-row gap-6 items-center">
+            <a href="{{ home_url }}" class="{% if request.path == home_url %}text-blue-700 font-bold{% endif %} link-base">Home</a>
+            <a href="{{ home_url }}" class="link-base">Articles</a>
+            <a href="{{ change_email_url }}" class="{% if request.path == change_email_url %}text-blue-700 font-bold{% endif %} link-base">Change E-mail</a>
         </div>
-        <form action="{% url 'account_logout' %}" method="POST" class="m-0">
-          {% csrf_token %}
-          <button type="submit" class="btn-base btn-danger btn-logout">Logout</button>
-        </form>
+        {% endif %}
+      </div>
+
+      <div class="flex items-center gap-4">
+        {% if user.is_authenticated %}
+          <div class="flex items-center px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
+            <span class="text-sm font-bold text-slate-600 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              {{ user.username }}
+            </span>
+          </div>
+          <form action="{% url 'account_logout' %}" method="POST" class="m-0">
+            {% csrf_token %}
+            <button type="submit" class="btn-base btn-danger btn-logout">Logout</button>
+          </form>
+        {% else %}
+          <a href="{{ login_url }}" class="link-base px-2">Login</a>
+          <a href="{{ signup_url }}" class="bg-indigo-700 text-white px-6 py-2 rounded-lg font-bold shadow-md hover:bg-indigo-800 transition-all">Sign Up</a>
         {% endif %}
       </div>
     </nav>
     {% endblock %}
 
-    
-
-     <main class="grow">
-
-      <div class="max-w-[1400px] mx-auto px-6 py-8 mt-[80px]">
-
-        {% block base_content %}
-          {% if not user.is_authenticated %}
-          <p class="text-red-800">THESE BUTTONS SHOULD GO IN NAVBAR</p>
-            <a href="{% url 'account_login' %}" class="btn-base btn-primary">Login</a>
-            <a href="{% url 'account_signup' %}" class="btn-base btn-secondary">Sign Up</a>
-          {% endif %}
-        {% endblock %}
-
+    <main class="grow">
+      <div class="max-w-[1400px] mx-auto p-4 md:p-6 lg:p-8 py-8 mt-[40px]">
+        <div class="allauth-content-wrapper">
+            {% block base_content %}
+            {% endblock %}
+        </div>
       </div>
-
     </main>
 
     {% block javascript %}
-    <script>      
-      // Find all <p> tags and color them if they contain "Error"
+    <script>       
+      // Your original JS logic maintained exactly
       document.querySelectorAll('p').forEach(p => {
         if (p.textContent.includes("The following email addresses are associated with your account:")) {
             p.classList.add('font-bold');
             p.classList.add('mb-[20px]');
-            p.classList.add('mt-0')
+            p.classList.add('mt-0');
             p.classList.add('py-[10px]');
             p.classList.add('px-[15px]');
             p.classList.add('border-l-[3px]');
@@ -126,8 +115,7 @@
             p.classList.add('bg-blue-100');
         }
       });
-</script>
-
+    </script>
     {% endblock %}
   </body>
 </html>

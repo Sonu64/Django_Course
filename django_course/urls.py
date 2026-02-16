@@ -18,10 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import RedirectView
 
+from allauth.account.views import SignupView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(pattern_name='home')),
+    path('', SignupView.as_view(), name='account_signup'),
     path('articles/', include("app.urls")),
-    path('accounts/', include('allauth.urls')),  # django-allauth URLs, no need for manual setup like a registrations/login.html...etc. allauth provides those pages out of the box. In the other HTML templates, we just have to use url 'account_login' to point to login page. and url 'account_logout' to point to logout page. Intially we did url 'logout OR login' but that was custom, now we are using allauth's built in logout/login page. Similar changes need to be done in settings.py to configure allauth. ex:- In LOGOUT_REDIRECT_URL etc.
+    path('accounts/', include('allauth.urls')),
+    path('accounts/signup/', RedirectView.as_view(url="/")),
     path('__debug__/', include("debug_toolbar.urls")),
+    # django-allauth URLs, no need for manual setup like a registrations/login.html...etc. allauth provides those pages out of the box. In the other HTML templates, we just have to use url 'account_login' to point to login page. and url 'account_logout' to point to logout page. Intially we did url 'logout OR login' but that was custom, now we are using allauth's built in logout/login page. Similar changes need to be done in settings.py to configure allauth. ex:- In LOGOUT_REDIRECT_URL etc.
+    
 ]
