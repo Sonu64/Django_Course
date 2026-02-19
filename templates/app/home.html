@@ -49,9 +49,17 @@
             ID: {{ article.id }}
           </span>
           <span
-            class="rounded bg-gray-100 px-2 py-1 text-xs font-mono text-gray-500 uppercase"
+            class="rounded px-2 py-1 text-xs font-mono text-gray-500 uppercase article-status-{{ article.status }}"
           >
+          {% if article.status == 'inProgress' %}
+            🕒 In Progress
+          {% elif article.status == 'published' %}
+            ✅ Published
+          {% elif article.status == 'draft' %}
+            📝 Draft
+          {% else %}
             {{ article.status }}
+          {% endif %}
           </span>
         </div>
         <h3
