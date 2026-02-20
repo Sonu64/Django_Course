@@ -35,30 +35,28 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('home')
     
     def form_valid(self, form):
-        form.instance.creator = self.request.user # form.instance refers to the Article object that is being created but not yet saved to the database. By setting form.instance.creator, you are assigning the currently logged-in user as the creator of the article before it gets saved. This way, when form.save() is eventually called (which happens in the parent class's form_valid method), the article will have its creator field properly set to the user who created it.
+        form.instance.creator = self.request.user
         
         try:
-        # This is where the actual DB 'INSERT' happens
+            # 1. Queue the success message
+            messages.success(self.request, "Article created successfully!", extra_tags="creation")
+            # 2. Attempt the DB Insert
             return super().form_valid(form)
-        
+            
         except DatabaseError:
-            # If the DB connection is dead
-            messages.error(self.request, "Critical: Could not connect to the database. Please check your internet.")
-            return self.form_invalid(form) # Re-renders the form so they don't lose their typing
-        # In Python, super() (the function) returns an object that allows you to call any method on the parent (following the MRO, since multiple inheritance is possible in Python !), including __init__, form_valid, or any custom logic.
-        # In Java, super is a keyword, but in Python super() is a method
+            # 3. DB died? Queue error and stay on form
+            messages.error(self.request, "Critical: Database connection lost. Try again.")
+            return self.form_invalid(form) 
         
     def form_invalid(self, form):   
-        # 1. Messaging: Error (Red)
-        messages.error(self.request, "Error creating article. Please check the form and try again.")
-        try:
-        # This is where the actual DB 'INSERT' happens
-            return super().form_valid(form)
+        # If we reach here, it means the user input was wrong (e.g. title too long)
         
-        except DatabaseError:
-            # If the DB connection is dead
-            messages.error(self.request, "Critical: Could not connect to the database. Please check your internet.")
-            return self.form_invalid(form) # Re-renders the form so they don't lose their typing
+        # form_invalid is the Security Guard at the front door. He checks the paperwork (the form). If the name is missing or the ID is invalid, he sends the person away immediately. He doesn't call the "Article" (the Database) because the paperwork is already wrong. No Database connection is needed to see that a field is empty!
+        
+        # It is important to understand that form_invalid is triggered by user input errors, not by database errors. So, we can safely add a message here without worrying about database exceptions, because if the form is invalid, it means we haven't even tried to save to the database yet.
+        
+        messages.error(self.request, "Error: Please correct the marked fields below.")
+        return super().form_invalid(form)
     
     
     

@@ -96,7 +96,11 @@
         <div class="bg-transparent pt-8 w-full flex justify-center">
           <ul>
             {% for message in messages %}
-              <li class="{{ message.tags }}">{{ message }}</li>
+              {% if "you have signed out" in message.message|lower %}
+                <li class="{{ message.tags }} destructive">{{ message }}</li>
+              {% else %}
+                <li class="{{ message.tags }}">{{ message }}</li>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
