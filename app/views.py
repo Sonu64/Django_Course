@@ -1,9 +1,19 @@
 # from django.shortcuts import render
+from urllib3 import request
+
 from app.models import Article
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import CreateView, ListView, UpdateView, DeleteView
+from django.contrib import messages
+# 1. For ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
+# 2. For ProtectedError (The one you're missing)
+from django.db.models import ProtectedError
+# 3. For IntegrityError and DatabaseError
+from django.db import IntegrityError, DatabaseError
+from django import http
 from typing import Any
 
 # Create your views here.
@@ -25,10 +35,30 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('home')
     
     def form_valid(self, form):
-        form.instance.creator = self.request.user
-        return super().form_valid(form)
+        form.instance.creator = self.request.user # form.instance refers to the Article object that is being created but not yet saved to the database. By setting form.instance.creator, you are assigning the currently logged-in user as the creator of the article before it gets saved. This way, when form.save() is eventually called (which happens in the parent class's form_valid method), the article will have its creator field properly set to the user who created it.
+        
+        try:
+        # This is where the actual DB 'INSERT' happens
+            return super().form_valid(form)
+        
+        except DatabaseError:
+            # If the DB connection is dead
+            messages.error(self.request, "Critical: Could not connect to the database. Please check your internet.")
+            return self.form_invalid(form) # Re-renders the form so they don't lose their typing
         # In Python, super() (the function) returns an object that allows you to call any method on the parent (following the MRO, since multiple inheritance is possible in Python !), including __init__, form_valid, or any custom logic.
-        # In Java, super is a keyword, but in Python super() is a method 
+        # In Java, super is a keyword, but in Python super() is a method
+        
+    def form_invalid(self, form):   
+        # 1. Messaging: Error (Red)
+        messages.error(self.request, "Error creating article. Please check the form and try again.")
+        try:
+        # This is where the actual DB 'INSERT' happens
+            return super().form_valid(form)
+        
+        except DatabaseError:
+            # If the DB connection is dead
+            messages.error(self.request, "Critical: Could not connect to the database. Please check your internet.")
+            return self.form_invalid(form) # Re-renders the form so they don't lose their typing
     
     
     
@@ -78,5 +108,58 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         else:
             return False
+        
+    def post(self, request, *args, **kwargs):
+            """
+            Overriding post is the most reliable way to handle messages in DeleteView.
+            """
+            # Get the article object to be deleted using get_object(), which is provided by the DeleteView and fetches the object based on the URL parameter (like ID).
+            
+            # When the DeleteView is first "born" to handle a click:
+
+            # self exists (the instance).
+
+            # self.object is technically an attribute the class expects to have, but at the very start of the post method, it hasn't been assigned anything yet (it's essentially a hollow shelf).
+
+            # self.get_object() goes to the warehouse (Database), grabs the specific article, and you then place it on that shelf by saying self.object = ....
+
+            # In Python, every class instance has self, but self.object is a specific convention used by Django's Generic Views (like DetailView, UpdateView, and DeleteView).
+
+            # 1. self = The Identity
+            # Every object in Python uses self to refer to itself. It’s like a person saying "I" or "Me."
+
+            # self.name = "My name"
+
+            # self.delete() = "I am deleting myself"
+
+            # 2. self.object = The Target
+            # In the specific case of Django’s SingleObjectMixin (the "Magic" inside DeleteView), self.object is a specific "label" Django uses to store the database record the view is currently working on.
+
+            # If you are deleting Article #5, self.object points to Article #5.
+
+            # If you are deleting Article #9, self.object points to Article #9.
+
+
+            # Below, not using self.object prevents confusion of the Django Convention, and also allows us to control the exact moment we fetch the object from the database, which is crucial for handling messages correctly.
+            target = self.get_object()
+            
+            try:
+                # 1. Perform the delete first
+                target.delete()
+                
+                # 2. Add the message AFTER the successful DB operation
+                messages.success(request, "Article Deleted Successfully!", extra_tags="destructive")
+                
+                # 3. Explicitly return a redirect
+                return redirect(self.success_url)
+                
+            except ProtectedError:
+                messages.error(request, "Cannot delete: This article is referenced in other places.")
+            except ObjectDoesNotExist:
+                messages.error(request, "Error: This article was already deleted by another user.")
+            except (IntegrityError, DatabaseError):
+                messages.error(request, "A system error occurred. Please try again later.")
+            
+            return redirect(self.success_url)
 
 
