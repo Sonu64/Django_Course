@@ -79,6 +79,23 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         else:
             return False
         
+    def form_valid(self, form):
+        try:
+            # 1. Queue the "Update" version of your message
+            messages.success(self.request, "Article updated successfully!", extra_tags="update")
+            
+            # 2. Save the changes
+            return super().form_valid(form)
+            
+        except DatabaseError:
+            messages.error(self.request, "Database error: Changes could not be saved.")
+            return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        # This fires if mandatory fields (like Title) are missing
+        messages.error(self.request, "Update failed. Please check the required fields.")
+        return super().form_invalid(form)
+        
         # Why not self.creator ? SHORT ANSWER --> Because here self is the ArticleUpdateView obj, not article obj.
         # When you are inside ArticleUpdateView, self refers to the instance of the View class that is currently handling the web request. It has methods like get_object(), but it doesn't automatically inherit the fields of the Article model.
 
