@@ -94,12 +94,12 @@
     <!-- Message Flashing Area -->
     {% if messages %}
         <div class="bg-transparent pt-8 w-full flex justify-center">
-          <ul>
+          <ul id="msg-list">
             {% for message in messages %}
               {% if "you have signed out" in message.message|lower %}
-                <li class="{{ message.tags }} destructive">{{ message }}</li>
+                <li class="{{ message.tags }} destructive transition-opacity duration-1000">{{ message }}</li>
               {% else %}
-                <li class="{{ message.tags }}">{{ message }}</li>
+                <li class="{{ message.tags }} transition-opacity duration-1000">{{ message }}</li>
               {% endif %}
             {% endfor %}
           </ul>
@@ -132,6 +132,24 @@
             p.classList.add('bg-blue-100');
         }
       });
+
+      // 1. Wait for the page to load
+    document.addEventListener('DOMContentLoaded', function() {
+        // 2. Select all message list items
+        const messages = document.querySelectorAll('#msg-list li');
+
+        messages.forEach(function(msg) {
+            // 3. Set a timer (e.g., 4000ms = 4 seconds)
+            setTimeout(function() {
+                // 4. Add a Tailwind fade-out transition
+                msg.style.transition = "opacity 1s ease";
+                msg.style.opacity = "0";
+
+                // 5. Actually remove it from the DOM after the fade
+                setTimeout(() => msg.remove(), 1000);
+            }, 4000); 
+        });
+    });
     </script>
     {% endblock %}
   </body>
